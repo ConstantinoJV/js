@@ -21,7 +21,7 @@ while (a<1 || a>5){
 function seleccion(a){
 
     if (a==1){
-        alert ("Puedes optimizar tu sistema de admision, escape, y frenos con un costo de 5000$");
+        alert ( "Puedes optimizar tu sistema de admision, escape, y frenos con un costo de 5000$");
     }
     else if(a==2){
         alert ("Optimizacion del sistema de suspension, inyeccion con un costo de 9000$");
