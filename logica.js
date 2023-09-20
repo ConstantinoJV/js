@@ -1,63 +1,90 @@
-
-
-let nombre = prompt ("Bienvenido, cual desea que sea su Nombre de usuario?");
+// let nombre = prompt ("Bienvenido, cual desea que sea su Nombre de usuario?");
 
 
 
-class Nivel{
-    constructor(id,descrip,precio){
+class Nivel {
+    constructor(id, descrip, precio, img, alt) {
         this.id = id
         this.descrip = descrip
         this.precio = precio
+        this.img = img
+        this.alt = alt
     }
-    descripcion(){
-        return "Nivel: "+this.id+"=>  "+this.descrip+", con un costo de "+this.precio+"$\n" 
-    }
-    descripcionCompra(){
-        return  this.id + " " + this.descrip
-    }
+    
 }
 
-class ControlNivel{
-    constructor(){
+class ControlNivel {
+    constructor() {
         this.listaNiveles = []
     }
-    agregar(nivel){
+    agregar(nivel) {
         this.listaNiveles.push(nivel)
     }
-    mostrar(){
-        let acumuladora = "Listado de niveles\n\n "
+    mostrarEnDOM() {
+        let selectorNiveles = document.getElementById("selectorNiveles")
         this.listaNiveles.forEach(nivel => {
-            acumuladora = acumuladora + nivel.descripcion()
+            selectorNiveles.innerHTML +=
+                `<div class="card" style="width: 18rem;">
+                <img src="${nivel.img}" class="card-img-top" alt="${nivel.alt}">
+            <div class="card-body">
+                <h5 class="card-title">nivel ${nivel.id}</h5>
+                <p class="card-text">${nivel.descrip}</p>
+                <p class="card-text">${nivel.precio}</p>
+                <button class="btn btn-primary" id="an-${nivel.id}">Adquirir nivel</a>
+            </div>
+            </div>`
         })
-        return acumuladora
+        this.listaNiveles.forEach(nivel => {
+            const btn_an = document.getElementById(`an-${nivel.id}`)
+
+            btn_an.addEventListener("click",()=>{
+                compra.agregar(nivel)
+                compra.mostrarEnDOM()
+            })
+        })
     }
-    buscar(id){
+    buscar(id) {
         return this.listaNiveles.find(nivel => nivel.id == id)
     }
 }
 
-class Compra{
-    constructor(){
+class Compra {
+    constructor() {
         this.listaCompra = []
     }
-    agregar(nivel){
+    agregar(nivel) {
         this.listaCompra.push(nivel)
     }
-    mostrar(){
-        let compraNivel = nombre + " adquiriste el siguiente nivel: \n\n" + nivel.descripcionCompra()
-        return compraNivel
+    mostrarEnDOM() {
+        let selectorCompra = document.getElementById("selectorCompra")
+        selectorCompra.innerHTML = ""
+        this.listaCompra.forEach(nivel => {
+            selectorCompra.innerHTML += `
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="${nivel.img}" class="img-fluid rounded-start" alt="${nivel.alt}">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">Nivel ${nivel.id}</h5>
+                        <p class="card-text">${nivel.precio}</p>
+                    </div>
+                </div>
+                </div>
+            </div>`
+        })
     }
 }
 
-const n1 = new Nivel(1,"Optimizar tu sistema de admision, escape, y frenos",5000)
-const n2 = new Nivel(2,"Optimizacion del sistema de suspension e inyeccion",9000)
-const n3 = new Nivel(3,"Mejora de la rigides del compacto, programacion de la ecu",12000)
-const n4 = new Nivel(4,"Implementacion de sistema de induccion forzada y mejora de la ignicion",18000)
-const n5 = new Nivel(5,"Performanse de todos los sistemas",20000)
-
-const controlN = new ControlNivel
+const controlN = new ControlNivel()
 const compra = new Compra()
+
+const n1 = new Nivel(1, "Optimizar tu sistema de admision, escape, y frenos", 5000, "https://www.tunerhouse.com/wp-content/uploads/2019/07/frenos-icono-2.jpg", "disco de freno competicion")
+const n2 = new Nivel(2, "Optimizacion del sistema de suspension e inyeccion", 9000, "https://cdn-images.motor.es/image/m/720w.webp/fotos-diccionario/2021/11/inyeccion_1635939186.jpg", "sistema inyeccion e ignicion")
+const n3 = new Nivel(3, "Mejora de la rigides del compacto, programacion de la ecu", 12000, "https://www.autoavance.co/wp-content/uploads/2020/02/j2534-reprogramacion-calibraciones-ecu.jpg", "programador ecu")
+const n4 = new Nivel(4, "Implementacion de sistema de induccion forzada y mejora de la ignicion", 18000, "https://acnews.blob.core.windows.net/imgnews/paragraph/NPAZ_67cc81361b7949a0ba5aacc625dfef1d.jpg", "turbocompresor y supercargador")
+const n5 = new Nivel(5, "Performanse de todos los sistemas", 20000, "https://image.made-in-china.com/202f0j00klDYeFRhlOqw/4WD-Dynamometer-Car-Chassis-Dynamometer-Manufacturer-China-Supplier.webp", "dimamometro automotriz")
 
 controlN.agregar(n1)
 controlN.agregar(n2)
@@ -65,67 +92,6 @@ controlN.agregar(n3)
 controlN.agregar(n4)
 controlN.agregar(n5)
 
-alert (controlN.mostrar())
-
-
-
-function nivell() {
-    return  prompt (nombre + ", del 1 al 5 selecciona que modificacion quieres para tu vehiculo ?");   
-}
-let id = nivell();
-
-while (id<1 || id>5){
-    alert ("modificacion invalida, intente denuevo");
-    nivell();
-    break;
-}
-
-const nivel =  controlN.buscar(id)
-
-compra.agregar(nivel)
-
-alert (compra.mostrar())
-
-
-
-
-
-// function seleccion(id){
-
-//     if (id==1){
-//         alert ( "Seleccionastes optimizar tu sistema de admision, escape, y frenos con un costo de 5000$");
-//     }
-//     else if(id==2){
-//         alert ("Seleccionastes optimizacion del sistema de suspension e inyeccion con un costo de 9000$");
-//     }
-//     else if(id==3){
-//         alert ("Seleccionastes mejora de la rigides del compacto, programacion de la ecu, con un costo de 12000$");
-//     }
-//     else if(id==4){
-//         alert ("Seleccionastes implementacion de sistema de induccion forzada y mejora de la ignicion con un costo de 18000$");
-//     }
-//     else if(id==5){
-//         alert ("Seleccionastes performanse de todos los sistemas con un costo base de 20000$");
-//     }
-// }
-
-// seleccion(id);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
+controlN.mostrarEnDOM()
 
 
