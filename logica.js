@@ -35,7 +35,7 @@ class ControlNivel {
         })
         this.listaNiveles.forEach(nivel => {
             const btn_an = document.getElementById(`an-${nivel.id}`)
-
+            
             btn_an.addEventListener("click",()=>{
                 compra.agregar(nivel)
                 compra.guardarCompra()
@@ -89,6 +89,7 @@ class Compra {
             </div>`
         })
     }
+
 }
 
 const controlN = new ControlNivel()
@@ -108,6 +109,13 @@ controlN.agregar(n5)
 
 compra.extraerCompra()
 compra.mostrarEnDOM()
+
+
+const btn_omitir = document.getElementById("Omitir")
+btn_omitir.addEventListener("click", ()=>{
+    compra.listaCompra = []
+    compra.mostrarEnDOM()
+    })
 
 controlN.mostrarEnDOM()
 
