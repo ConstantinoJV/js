@@ -1,4 +1,3 @@
-// let nombre = prompt ("Bienvenido, cual desea que sea su Nombre de usuario?");
 
 
 
@@ -39,6 +38,7 @@ class ControlNivel {
 
             btn_an.addEventListener("click",()=>{
                 compra.agregar(nivel)
+                compra.guardarCompra()
                 compra.mostrarEnDOM()
             })
         })
@@ -54,6 +54,20 @@ class Compra {
     }
     agregar(nivel) {
         this.listaCompra.push(nivel)
+    }
+    guardarCompra(){
+        let listaCompraJSON = JSON.stringify(this.listaCompra)
+        localStorage.setItem("listaCompra", listaCompraJSON) 
+    }
+    extraerCompra(){
+        let listaCompraJSON = localStorage.getItem("listaCompra")
+        let listaCompraEX = JSON.parse(listaCompraJSON)
+        let listaExtraida = []
+        listaCompraEX.forEach(nivel => {
+            let nuevoNivel = new Nivel (nivel.id,nivel.descrip, nivel.precio, nivel.img, nivel.alt)
+            listaExtraida.push(nuevoNivel)
+        })
+        this.listaCompra = listaExtraida
     }
     mostrarEnDOM() {
         let selectorCompra = document.getElementById("selectorCompra")
@@ -91,6 +105,9 @@ controlN.agregar(n2)
 controlN.agregar(n3)
 controlN.agregar(n4)
 controlN.agregar(n5)
+
+compra.extraerCompra()
+compra.mostrarEnDOM()
 
 controlN.mostrarEnDOM()
 
